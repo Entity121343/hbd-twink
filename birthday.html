@@ -1,0 +1,1441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 🎂</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&family=Amiri:wght@400;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --gold: #f5c842;
+      --deep-gold: #c89b2a;
+      --rose: #e8526a;
+      --blush: #f9ccd3;
+      --dark: #100c18;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CURSOR */
+    .cursor {
+      width: 16px;
+      height: 16px;
+      background: var(--gold);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      transition: width .2s, height .2s;
+    }
+
+    .cursor-trail {
+      width: 7px;
+      height: 7px;
+      background: var(--rose);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left .1s ease, top .1s ease;
+      opacity: .55;
+    }
+
+    /* STARS */
+    .stars-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--d, 3s) var(--del, 0s) infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from {
+        opacity: .08;
+        transform: scale(.7)
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1.3)
+      }
+    }
+
+    /* INTRO */
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, #1e1030 0%, #0a0614 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+
+    #intro.hide {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.08);
+    }
+
+    .intro-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.6rem, 8vw, 6rem);
+      color: #fff;
+      text-align: center;
+      letter-spacing: .04em;
+      line-height: 1.1;
+      animation: riseIn 1s .1s ease both;
+    }
+
+    .intro-heading span {
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(245, 200, 66, .6), 0 0 80px rgba(245, 200, 66, .25);
+    }
+
+    .intro-arabic {
+      font-family: 'Amiri', serif;
+      direction: rtl;
+      font-size: clamp(1.1rem, 3.2vw, 1.8rem);
+      color: rgba(249, 204, 211, .75);
+      text-align: center;
+      margin-top: .55em;
+      animation: riseIn 1s .35s ease both;
+      text-shadow: 0 0 18px rgba(232, 82, 106, .3);
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(28px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .candles-row {
+      display: flex;
+      gap: 18px;
+      margin-top: 44px;
+      animation: riseIn 1s .65s ease both;
+    }
+
+    .candle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: sway 2.4s infinite alternate ease-in-out;
+    }
+
+    .candle:nth-child(2) {
+      animation-delay: .25s
+    }
+
+    .candle:nth-child(3) {
+      animation-delay: .5s
+    }
+
+    .candle:nth-child(4) {
+      animation-delay: .15s
+    }
+
+    .candle:nth-child(5) {
+      animation-delay: .4s
+    }
+
+    @keyframes sway {
+      from {
+        transform: rotate(-4deg)
+      }
+
+      to {
+        transform: rotate(4deg)
+      }
+    }
+
+    .flame {
+      width: 13px;
+      height: 21px;
+      background: radial-gradient(ellipse at 50% 85%, #fffde0 0%, #ffab00 40%, #ff4500 100%);
+      border-radius: 50% 50% 30% 30%;
+      animation: flicker .13s infinite alternate;
+      box-shadow: 0 0 12px #ffab00, 0 0 24px #ff450066;
+    }
+
+    @keyframes flicker {
+      from {
+        transform: scaleX(1) scaleY(1) rotate(-2deg)
+      }
+
+      to {
+        transform: scaleX(.8) scaleY(1.12) rotate(2deg)
+      }
+    }
+
+    .wick {
+      width: 2px;
+      height: 8px;
+      background: #444;
+    }
+
+    .candle-body {
+      width: 12px;
+      height: 50px;
+      background: linear-gradient(to bottom, #fff, #fde8d0);
+      border-radius: 3px;
+    }
+
+    .enter-btn {
+      margin-top: 56px;
+      padding: 15px 52px;
+      background: transparent;
+      border: 1.5px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: color .4s;
+      animation: riseIn 1s .9s ease both;
+    }
+
+    .enter-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .4s ease;
+      z-index: -1;
+    }
+
+    .enter-btn:hover::before {
+      transform: scaleX(1);
+    }
+
+    .enter-btn:hover {
+      color: var(--dark);
+    }
+
+    /* CONFETTI */
+    .confetti-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 500;
+      overflow: hidden;
+    }
+
+    .confetti-piece {
+      position: absolute;
+      opacity: 0;
+      animation: cfFall var(--d) var(--delay) linear infinite;
+    }
+
+    @keyframes cfFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* MAIN */
+    #main {
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 25% 0%, #1c0e2e 0%, #0a0614 70%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 80px;
+    }
+
+    .scene-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      margin: 64px 0 10px;
+      animation: riseIn .8s .1s ease both;
+      text-align: center;
+    }
+
+    .scene-sub {
+      font-size: clamp(.82rem, 1.8vw, 1rem);
+      color: rgba(255, 255, 255, .32);
+      letter-spacing: .12em;
+      margin-bottom: 64px;
+      animation: riseIn .8s .25s ease both;
+      text-align: center;
+    }
+
+    /* GIFTS ROW */
+    .gifts-row {
+      display: flex;
+      gap: clamp(22px, 5vw, 68px);
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0 24px;
+    }
+
+    .gift-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      cursor: none;
+      animation: giftIn .7s ease both;
+    }
+
+    .gift-wrapper:nth-child(1) {
+      animation: giftIn .7s .1s ease both, floatA 3.2s .0s ease-in-out infinite alternate;
+    }
+
+    .gift-wrapper:nth-child(2) {
+      animation: giftIn .7s .3s ease both, floatA 3.0s .6s ease-in-out infinite alternate;
+    }
+
+    .gift-wrapper:nth-child(3) {
+      animation: giftIn .7s .5s ease both, floatA 3.4s 1.1s ease-in-out infinite alternate;
+    }
+
+    @keyframes giftIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px) scale(.75)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    @keyframes floatA {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(-14px)
+      }
+    }
+
+    .gift-box {
+      position: relative;
+      width: clamp(155px, 22vw, 225px);
+      height: clamp(155px, 22vw, 225px);
+    }
+
+    .gift-box:hover .gift-lid {
+      transform: translateY(-22px) rotate(-6deg);
+    }
+
+    .gift-body {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 75%;
+      border-radius: 6px 6px 10px 10px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, .6), inset 0 1px 0 rgba(255, 255, 255, .12);
+    }
+
+    .gift-lid {
+      position: absolute;
+      top: 0;
+      width: 110%;
+      left: -5%;
+      height: 30%;
+      border-radius: 6px;
+      transition: transform .5s cubic-bezier(.34, 1.56, .64, 1);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .18);
+      z-index: 3;
+    }
+
+    .ribbon-v {
+      position: absolute;
+      width: 17%;
+      height: 100%;
+      left: 41.5%;
+      top: 0;
+      border-radius: 3px;
+      z-index: 2;
+    }
+
+    .ribbon-h {
+      position: absolute;
+      height: 17%;
+      width: 100%;
+      top: 22%;
+      left: 0;
+      border-radius: 3px;
+      z-index: 2;
+    }
+
+    .bow {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 4;
+      width: 62px;
+      height: 32px;
+    }
+
+    .bow-left,
+    .bow-right {
+      position: absolute;
+      width: 28px;
+      height: 22px;
+      border-radius: 50% 50% 0 0;
+      top: 0;
+    }
+
+    .bow-left {
+      left: 0;
+      transform: rotate(-30deg);
+      transform-origin: right bottom;
+      animation: bowL 1.6s infinite alternate;
+    }
+
+    .bow-right {
+      right: 0;
+      transform: rotate(30deg);
+      transform-origin: left bottom;
+      animation: bowR 1.6s infinite alternate;
+    }
+
+    @keyframes bowL {
+      from {
+        transform: rotate(-30deg) scale(1)
+      }
+
+      to {
+        transform: rotate(-36deg) scale(1.1)
+      }
+    }
+
+    @keyframes bowR {
+      from {
+        transform: rotate(30deg) scale(1)
+      }
+
+      to {
+        transform: rotate(36deg) scale(1.1)
+      }
+    }
+
+    .bow-knot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 5;
+    }
+
+    /* gift colour themes */
+    .gift1 .gift-body {
+      background: linear-gradient(135deg, #2563a8, #153a6e)
+    }
+
+    .gift1 .gift-lid {
+      background: linear-gradient(135deg, #3b82d4, #2563a8)
+    }
+
+    .gift1 .ribbon-v,
+    .gift1 .ribbon-h {
+      background: linear-gradient(180deg, #f59e0b, #d97706)
+    }
+
+    .gift1 .bow-left,
+    .gift1 .bow-right {
+      background: radial-gradient(#f59e0b, #b45309)
+    }
+
+    .gift1 .bow-knot {
+      background: #f59e0b;
+      box-shadow: 0 0 10px #f59e0b
+    }
+
+    .gift2 .gift-body {
+      background: linear-gradient(135deg, #6d28d9, #3b0764)
+    }
+
+    .gift2 .gift-lid {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9)
+    }
+
+    .gift2 .ribbon-v,
+    .gift2 .ribbon-h {
+      background: linear-gradient(180deg, #fbbf24, #f59e0b)
+    }
+
+    .gift2 .bow-left,
+    .gift2 .bow-right {
+      background: radial-gradient(#fbbf24, #d97706)
+    }
+
+    .gift2 .bow-knot {
+      background: #fbbf24;
+      box-shadow: 0 0 10px #fbbf24
+    }
+
+    .gift3 .gift-body {
+      background: linear-gradient(135deg, #c0392b, #7b1a12)
+    }
+
+    .gift3 .gift-lid {
+      background: linear-gradient(135deg, #e74c3c, #c0392b)
+    }
+
+    .gift3 .ribbon-v,
+    .gift3 .ribbon-h {
+      background: linear-gradient(180deg, #f1c40f, #e67e22)
+    }
+
+    .gift3 .bow-left,
+    .gift3 .bow-right {
+      background: radial-gradient(#f1c40f, #d35400)
+    }
+
+    .gift3 .bow-knot {
+      background: #f1c40f;
+      box-shadow: 0 0 10px #f1c40f
+    }
+
+    /* glow ring */
+    .glow-ring {
+      position: absolute;
+      inset: -8px;
+      border-radius: 14px;
+      border: 2px solid transparent;
+      pointer-events: none;
+      animation: glow 2.2s infinite;
+    }
+
+    .gift1 .glow-ring {
+      border-color: #3b82d4;
+      box-shadow: 0 0 22px #3b82d466
+    }
+
+    .gift2 .glow-ring {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 22px #8b5cf666
+    }
+
+    .gift3 .glow-ring {
+      border-color: #e74c3c;
+      box-shadow: 0 0 22px #e74c3c66
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        opacity: .3;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .9;
+        transform: scale(1.04)
+      }
+    }
+
+    /* sparkles */
+    .sparkles {
+      position: absolute;
+      inset: -20px;
+      pointer-events: none;
+    }
+
+    .sparkles span {
+      position: absolute;
+      font-size: 1.15rem;
+      animation: sparkleF 2s infinite;
+      animation-play-state: paused;
+      opacity: 0;
+    }
+
+    @keyframes sparkleF {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0)
+      }
+
+      50% {
+        opacity: 1;
+        transform: translate(var(--tx), var(--ty)) scale(1.2)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(calc(var(--tx)*1.8), calc(var(--ty)*1.8)) scale(0)
+      }
+    }
+
+    .gift-box:hover .sparkles span {
+      animation-play-state: running;
+    }
+
+    /* orbiting particles */
+    .particles {
+      position: absolute;
+      inset: -30px;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      animation: orbit var(--d) linear infinite;
+    }
+
+    @keyframes orbit {
+      from {
+        transform: rotate(var(--s)) translateX(var(--r)) rotate(calc(-1*var(--s)))
+      }
+
+      to {
+        transform: rotate(calc(var(--s)+360deg)) translateX(var(--r)) rotate(calc(-1*(var(--s)+360deg)))
+      }
+    }
+
+    /* floating emoji stars */
+    .floating-stars {
+      position: absolute;
+      inset: -40px;
+      pointer-events: none;
+    }
+
+    .fstar {
+      position: absolute;
+      font-size: 1rem;
+      animation: floatStar var(--d) var(--del) ease-in-out infinite alternate;
+    }
+
+    @keyframes floatStar {
+      from {
+        transform: translateY(0) rotate(0deg);
+        opacity: .3
+      }
+
+      to {
+        transform: translateY(-18px) rotate(25deg);
+        opacity: .85
+      }
+    }
+
+    .gift-shadow {
+      width: 78%;
+      height: 13px;
+      background: rgba(0, 0, 0, .5);
+      border-radius: 50%;
+      filter: blur(8px);
+      animation: shadowP 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes shadowP {
+      from {
+        transform: scaleX(1);
+        opacity: .5
+      }
+
+      to {
+        transform: scaleX(.65);
+        opacity: .25
+      }
+    }
+
+    .gift-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, .42);
+      transition: color .3s;
+    }
+
+    .gift-wrapper:hover .gift-label {
+      color: var(--gold);
+    }
+
+    .gift-arrow {
+      font-size: 1.2rem;
+      color: var(--gold);
+      opacity: .48;
+      animation: bounceArr 1s infinite alternate;
+    }
+
+    @keyframes bounceArr {
+      from {
+        transform: translateY(0)
+      }
+
+      to {
+        transform: translateY(7px)
+      }
+    }
+
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .82);
+      backdrop-filter: blur(14px);
+      z-index: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: linear-gradient(150deg, #1a1030, #100c1e);
+      border: 1px solid rgba(245, 200, 66, .22);
+      border-radius: 20px;
+      padding: clamp(22px, 4vw, 48px);
+      max-width: min(92vw, 640px);
+      width: 100%;
+      transform: scale(.82) translateY(32px);
+      transition: transform .5s cubic-bezier(.34, 1.56, .64, 1);
+      position: relative;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, .8), 0 0 60px rgba(245, 200, 66, .04);
+    }
+
+    .modal-overlay.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, .28);
+      font-size: 1.5rem;
+      cursor: none;
+      transition: color .2s, transform .2s;
+      line-height: 1;
+    }
+
+    .modal-close:hover {
+      color: var(--rose);
+      transform: rotate(90deg);
+    }
+
+    .modal-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    /* MODAL 1: LETTER */
+    .letter-paper {
+      background: linear-gradient(160deg, #fdf9f0, #f5ecdb);
+      border-radius: 12px;
+      padding: clamp(22px, 4vw, 42px);
+      color: #2a1a10;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .letter-paper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(transparent, transparent 27px, rgba(0, 80, 120, .07) 28px);
+      pointer-events: none;
+    }
+
+    .letter-stamp {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 58px;
+      height: 68px;
+      border: 2.5px solid var(--deep-gold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      opacity: .35;
+      transform: rotate(7deg);
+    }
+
+    .letter-to {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      font-weight: 600;
+      color: #5a3010;
+      margin-bottom: 18px;
+    }
+
+    .letter-to span {
+      color: var(--deep-gold);
+      border-bottom: 2px dashed var(--deep-gold);
+      padding: 0 4px;
+    }
+
+    .letter-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(.88rem, 2vw, 1rem);
+      line-height: 1.95;
+      color: #3a2010;
+    }
+
+    .letter-body p {
+      margin-bottom: 13px;
+    }
+
+    .letter-sign {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--deep-gold);
+      text-align: right;
+      margin-top: 18px;
+    }
+
+    .letter-name-ph {
+      color: var(--deep-gold);
+      border-bottom: 2px dashed var(--deep-gold);
+      padding: 0 4px;
+      font-style: italic;
+    }
+
+    /* MODAL 2: PHOTOS */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .photo-card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1e1230;
+      border: 1px solid rgba(255, 255, 255, .07);
+      transition: transform .3s, box-shadow .3s;
+      max-width: 250px;
+      margin: 0 auto;
+    }
+
+    .photo-card:hover {
+      transform: scale(1.04) rotate(-1deg);
+      box-shadow: 0 12px 32px rgba(139, 92, 246, .3);
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 1/1;
+      max-height: 200px;
+      display: flex;
+      object-fit: contain;
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, #1e1230, #2e1845);
+      position: relative;
+    }
+
+    .photo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* 🔥 THIS is where it belongs */
+    }
+
+    .photo-placeholder::after {
+      content: './photos/';
+      position: absolute;
+      bottom: 7px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: .58rem;
+      color: rgba(255, 255, 255, .22);
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: .1em;
+    }
+
+    .photo-caption {
+      padding: 9px 12px;
+      font-size: .85rem;
+      text-align: center;
+      margin-top: 6px;
+      opacity: 0.7;
+      color: rgba(255, 255, 255, .42);
+      border-top: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    .joke-box {
+      background: rgba(245, 200, 66, .07);
+      border: 1px dashed rgba(245, 200, 66, .26);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: .95rem;
+      color: rgba(255, 255, 255, .72);
+      line-height: 1.7;
+      margin-top: 10px;
+    }
+
+    .joke-box strong {
+      color: var(--gold);
+    }
+
+    .joke-ph {
+      color: rgba(245, 200, 66, .32);
+      font-style: italic;
+    }
+
+    /* MODAL 3: RICK */
+    .rick-content {
+      text-align: center;
+      padding: 16px 0;
+    }
+
+    .rick-emoji {
+      font-size: 5rem;
+      display: block;
+      animation: rickB .55s infinite alternate;
+    }
+
+    @keyframes rickB {
+      from {
+        transform: translateY(0) rotate(-6deg)
+      }
+
+      to {
+        transform: translateY(-12px) rotate(6deg)
+      }
+    }
+
+    .rick-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--gold);
+      margin: 18px 0 8px;
+    }
+
+    .rick-sub {
+      color: rgba(255, 255, 255, .42);
+      font-size: .92rem;
+      margin-bottom: 28px;
+    }
+
+    .rick-btn {
+      display: inline-block;
+      padding: 17px 52px;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      letter-spacing: .08em;
+      border-radius: 50px;
+      text-decoration: none;
+      cursor: none;
+      box-shadow: 0 10px 40px rgba(231, 76, 60, .5);
+      transition: transform .3s, box-shadow .3s;
+      animation: rickPulse 1.6s infinite;
+    }
+
+    .rick-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 14px 52px rgba(231, 76, 60, .75);
+    }
+
+    @keyframes rickPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 10px 40px rgba(231, 76, 60, .5)
+      }
+
+      50% {
+        box-shadow: 0 10px 60px rgba(231, 76, 60, .95), 0 0 90px rgba(231, 76, 60, .3)
+      }
+    }
+
+    .rick-video-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 14px;
+      letter-spacing: .1em;
+      animation: riseIn .6s ease both;
+    }
+
+    .rick-video-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      /* keeps 16:9 */
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 16px 50px rgba(0, 0, 0, .7), 0 0 40px rgba(231, 76, 60, .25);
+      animation: riseIn .6s .1s ease both;
+    }
+
+    #rickVid {
+      position: absolute;
+      /* 🔥 THIS fixes everything */
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    /* override modal padding for video */
+    #modal3 .modal {
+      padding: clamp(18px, 3vw, 36px);
+    }
+
+    .rick-warning {
+      font-size: .72rem;
+      color: rgba(255, 255, 255, .2);
+      margin-top: 14px;
+      font-style: italic;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--deep-gold);
+      border-radius: 2px
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+  <div class="confetti-container" id="confettiContainer"></div>
+
+  <!-- ══ INTRO ══ -->
+  <div id="intro">
+    <div class="stars-bg" id="starsBg"></div>
+    <h1 class="intro-heading">Happy Birthday,<br><span>Assia</span> 🎂</h1>
+    <p class="intro-arabic">عيد ميلاد سعيد</p>
+    <div class="candles-row">
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="candle-body"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="candle-body"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="candle-body"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="candle-body"></div>
+      </div>
+      <div class="candle">
+        <div class="flame"></div>
+        <div class="wick"></div>
+        <div class="candle-body"></div>
+      </div>
+    </div>
+    <button class="enter-btn" onclick="enterMain()">Open Your Gifts 🎁</button>
+  </div>
+
+  <!-- ══ MAIN ══ -->
+  <div id="main" style="display:none">
+    <p class="scene-title">Your gifts await</p>
+    <p class="scene-sub">Click a box to unwrap it ✨</p>
+
+    <div class="gifts-row">
+
+      <!-- GIFT 1: LETTER -->
+      <div class="gift-wrapper" onclick="openModal('modal1')">
+        <div class="gift-box gift1">
+          <div class="glow-ring"></div>
+          <div class="gift-lid">
+            <div class="ribbon-v"></div>
+          </div>
+          <div class="gift-body">
+            <div class="ribbon-v"></div>
+            <div class="ribbon-h"></div>
+          </div>
+          <div class="bow">
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-knot"></div>
+          </div>
+          <div class="sparkles">
+            <span style="--tx:-32px;--ty:-32px;top:10%;left:10%;animation-delay:.0s">✨</span>
+            <span style="--tx:32px;--ty:-28px;top:8%;right:8%;animation-delay:.4s">⭐</span>
+            <span style="--tx:-22px;--ty:22px;bottom:10%;left:18%;animation-delay:.8s">💫</span>
+            <span style="--tx:26px;--ty:18px;bottom:14%;right:14%;animation-delay:1.2s">🌟</span>
+          </div>
+          <div class="particles" id="pt1"></div>
+          <div class="floating-stars">
+            <span class="fstar" style="--d:2s;--del:0s;top:4%;left:4%">⭐</span>
+            <span class="fstar" style="--d:2.5s;--del:.5s;top:8%;right:6%">✨</span>
+            <span class="fstar" style="--d:1.8s;--del:1s;bottom:4%;left:14%">💛</span>
+          </div>
+        </div>
+        <div class="gift-shadow"></div>
+        <div class="gift-label">A Letter 💌</div>
+        <div class="gift-arrow">↓</div>
+      </div>
+
+      <!-- GIFT 2: PHOTOS -->
+      <div class="gift-wrapper" onclick="openModal('modal2')">
+        <div class="gift-box gift2">
+          <div class="glow-ring"></div>
+          <div class="gift-lid">
+            <div class="ribbon-v"></div>
+          </div>
+          <div class="gift-body">
+            <div class="ribbon-v"></div>
+            <div class="ribbon-h"></div>
+          </div>
+          <div class="bow">
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-knot"></div>
+          </div>
+          <div class="sparkles">
+            <span style="--tx:-26px;--ty:-36px;top:10%;left:10%;animation-delay:.2s">💜</span>
+            <span style="--tx:36px;--ty:-22px;top:5%;right:10%;animation-delay:.6s">✨</span>
+            <span style="--tx:-16px;--ty:26px;bottom:10%;left:10%;animation-delay:1s">🌸</span>
+            <span style="--tx:22px;--ty:20px;bottom:8%;right:12%;animation-delay:1.4s">💫</span>
+          </div>
+          <div class="particles" id="pt2"></div>
+          <div class="floating-stars">
+            <span class="fstar" style="--d:2.2s;--del:.3s;top:6%;left:6%">💜</span>
+            <span class="fstar" style="--d:1.9s;--del:.8s;top:4%;right:4%">🌟</span>
+            <span class="fstar" style="--d:2.7s;--del:.1s;bottom:6%;right:8%">✨</span>
+          </div>
+        </div>
+        <div class="gift-shadow"></div>
+        <div class="gift-label">Memories 📸</div>
+        <div class="gift-arrow">↓</div>
+      </div>
+
+      <!-- GIFT 3: TROLL -->
+      <div class="gift-wrapper" onclick="openModal('modal3')">
+        <div class="gift-box gift3">
+          <div class="glow-ring"></div>
+          <div class="gift-lid">
+            <div class="ribbon-v"></div>
+          </div>
+          <div class="gift-body">
+            <div class="ribbon-v"></div>
+            <div class="ribbon-h"></div>
+          </div>
+          <div class="bow">
+            <div class="bow-left"></div>
+            <div class="bow-right"></div>
+            <div class="bow-knot"></div>
+          </div>
+          <div class="sparkles">
+            <span style="--tx:-30px;--ty:-30px;top:10%;left:10%;animation-delay:.1s">🎵</span>
+            <span style="--tx:30px;--ty:-25px;top:8%;right:8%;animation-delay:.5s">🎶</span>
+            <span style="--tx:-20px;--ty:20px;bottom:8%;left:12%;animation-delay:.9s">🎤</span>
+            <span style="--tx:25px;--ty:18px;bottom:10%;right:10%;animation-delay:1.3s">❓</span>
+          </div>
+          <div class="particles" id="pt3"></div>
+          <div class="floating-stars">
+            <span class="fstar" style="--d:2.1s;--del:.2s;top:5%;left:5%">🎵</span>
+            <span class="fstar" style="--d:2.4s;--del:.7s;top:7%;right:5%">🎶</span>
+            <span class="fstar" style="--d:1.7s;--del:1.2s;bottom:5%;left:7%">❓</span>
+          </div>
+        </div>
+        <div class="gift-shadow"></div>
+        <div class="gift-label">Mystery 🎁</div>
+        <div class="gift-arrow">↓</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ MODAL 1: LETTER ══ -->
+  <div class="modal-overlay" id="modal1">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal1')">✕</button>
+      <div class="modal-heading">💌 A Letter For You</div>
+      <div class="letter-paper">
+        <div class="letter-stamp">💌</div>
+        <div class="letter-to">Dear <span>Assia</span>,</div>
+        <div class="letter-body">
+          <p>On this very special day, I wanted to take a moment to tell you just how much you mean to me.</p>
+          <p>Thank you for coming into my life and making it so much brighter.</p>
+          <p>Every memory we've shared is something I genuinely treasure, and I'm genuinely so grateful to a point I
+            cannot put it in words.</p>
+          <p>You make me smile and laugh everyday. Thank you for your understandting. Thank you for being such an
+            amazing person. Thank you for being you, and lastly, Thank you for caring about me.</p>
+          <p>I really appreciate you so much, realise it you potato</p>
+          <p>Happy Birthday, <span class="letter-name-ph">Assia</span>. Cheers's to your entrance in adulthood aunt xD.
+            🥂✨</p>
+          <div class="letter-sign">With so much love (and coffee)🌹</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL 2: PHOTOS ══ -->
+  <div class="modal-overlay" id="modal2">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('modal2')">✕</button>
+      <div class="modal-heading">Our Autism 🤒</div>
+      <div class="photos-grid">
+        <div class="photo-card">
+          <div class="photo-placeholder"> <img src="./photos/troll.jpeg" alt="Troll Photo"> </div>
+          <div class="photo-caption">no promises :p</div>
+        </div>
+        <div class="photo-card">
+          <div class="photo-placeholder"> <img src="./photos/pic-drops.jpeg" alt="Pic Drops"> </div>
+          <div class="photo-caption">share more stuff god damnit 😭</div>
+        </div>
+        <div class="photo-card">
+          <div class="photo-placeholder"> <img src="./photos/tease.jpeg" alt="Tease Photo"> </div>
+          <div class="photo-caption">deal 😊</div>
+        </div>
+        <div class="photo-card">
+          <div class="photo-placeholder"> <img src="./photos/more tease.jpeg" alt="More Tease Photo"> </div>
+          <div class="photo-caption">promotion to aunt 😍</div>
+        </div>
+      </div>
+      <div class="joke-box"><span class="joke-ph">I will pet you >:D (consent is optional)</span>
+      </div>
+      <div class="joke-box"><span class="joke-ph">Still not enough hugs. This is a complaint 🙁.</span>
+      </div>
+      <div class="joke-box"><span class="joke-ph">We don't even have a single photo together... not acceptable
+          yk?</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MODAL 3: RICK ══ -->
+  <div class="modal-overlay" id="modal3">
+    <div class="modal" style="max-width:min(92vw,700px)">
+      <button class="modal-close" onclick="closeRick()">✕</button>
+
+      <!-- pre-click teaser -->
+      <div class="rick-content" id="rickTeaser">
+        <span class="rick-emoji">🕺</span>
+        <div class="rick-title">You've won a special prize!</div>
+        <div class="rick-sub">Click the button to claim it… totally legit, we promise.</div>
+        <button class="rick-btn" onclick="revealRick()">🎁 Claim Your Prize</button>
+        <p class="rick-warning">* No refunds. No regrets. 🎵</p>
+      </div>
+
+      <!-- video reveal (hidden until clicked) -->
+      <div id="rickVideo" style="display:none">
+        <div class="rick-video-label">🎶 Never Gonna Give You Up 🎶</div>
+
+        <div class="rick-video-wrap">
+          <video id="rickVid" width="100%" controls preload="auto">
+            <source src="./video/rick.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <p class="rick-warning" style="margin-top:14px;text-align:center">
+          You've been rickrolled. Happy Birthday 🎂
+        </p>
+      </div>
+
+      <script>
+        // ── Expose interactive functions on window so inline onclick handlers can reach them
+        window.enterMain = function () {
+          document.getElementById('intro').classList.add('hide');
+          setTimeout(() => {
+            document.getElementById('intro').style.display = 'none';
+            const m = document.getElementById('main');
+            m.style.display = 'flex';
+            m.style.flexDirection = 'column';
+          }, 1200);
+        };
+
+        window.openModal = function (id) {
+          document.getElementById(id).classList.add('open');
+          burstConfetti();
+        };
+
+        window.closeModal = function (id) {
+          document.getElementById(id).classList.remove('open');
+        };
+
+        window.revealRick = function () {
+          document.getElementById('rickTeaser').style.display = 'none';
+
+          const vidContainer = document.getElementById('rickVideo');
+          const video = document.getElementById('rickVid');
+
+          vidContainer.style.display = 'block';
+
+          // 🎯 jump to specific timestamp (in seconds)
+          video.currentTime = 0; // change this to whatever second you want
+
+          video.play();
+
+          burstConfetti();
+        };
+
+        window.closeRick = function () {
+          window.closeModal('modal3');
+          setTimeout(() => {
+            document.getElementById('rickIframe').src = '';
+            document.getElementById('rickTeaser').style.display = 'block';
+            document.getElementById('rickVideo').style.display = 'none';
+          }, 400);
+        };
+
+        function burstConfetti() {
+          const c = document.getElementById('confettiContainer');
+          ['#f5c842', '#e8526a', '#4a90d9', '#8b5cf6'].forEach(col => {
+            for (let j = 0; j < 7; j++) {
+              const p = document.createElement('div');
+              p.style.cssText = `position:absolute;left:${Math.random() * 100}%;top:-12px;width:9px;height:9px;background:${col};border-radius:50%;animation:cfFall ${(Math.random() * 1.8 + .8).toFixed(1)}s linear forwards;`;
+              c.appendChild(p);
+              setTimeout(() => p.remove(), 3000);
+            }
+          });
+        }
+
+        // ── Init (runs after DOM is ready since script is at bottom of body)
+        // Cursor
+        const cursor = document.getElementById('cursor');
+        const trail = document.getElementById('cursorTrail');
+        document.addEventListener('mousemove', e => {
+          cursor.style.left = e.clientX + 'px';
+          cursor.style.top = e.clientY + 'px';
+          setTimeout(() => { trail.style.left = e.clientX + 'px'; trail.style.top = e.clientY + 'px'; }, 90);
+        });
+
+        // Stars
+        (function () {
+          const bg = document.getElementById('starsBg');
+          for (let i = 0; i < 130; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            const sz = Math.random() * 2.5 + .8;
+            s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${(Math.random() * 3 + 1.5).toFixed(1)}s;--del:${(Math.random() * 4).toFixed(1)}s;`;
+            bg.appendChild(s);
+          }
+        })();
+
+        // Background confetti
+        (function () {
+          const c = document.getElementById('confettiContainer');
+          const colors = ['#f5c842', '#e8526a', '#4a90d9', '#8b5cf6', '#2ecc71', '#f39c12'];
+          const shapes = ['■', '●', '▲', '★', '♦', '✦'];
+          for (let i = 0; i < 55; i++) {
+            const p = document.createElement('div');
+            p.className = 'confetti-piece';
+            p.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+            p.style.cssText = `left:${Math.random() * 100}%;color:${colors[Math.floor(Math.random() * colors.length)]};font-size:${Math.random() * 12 + 7}px;--d:${(Math.random() * 4 + 3).toFixed(1)}s;--delay:${(Math.random() * 6).toFixed(1)}s;`;
+            c.appendChild(p);
+          }
+        })();
+
+        // Orbiting particles
+        (function () {
+          function makeParticles(id, col) {
+            const wrap = document.getElementById(id);
+            if (!wrap) return;
+            const palette = [col, '#ffffff', '#f5c842'];
+            for (let i = 0; i < 6; i++) {
+              const p = document.createElement('div');
+              p.className = 'particle';
+              const sz = Math.random() * 5 + 3;
+              const r = 75 + Math.random() * 45;
+              p.style.cssText = `width:${sz}px;height:${sz}px;background:${palette[i % 3]};--d:${(Math.random() * 3 + 3).toFixed(1)}s;--r:${r}px;--s:${i * 60}deg;opacity:.65;`;
+              wrap.appendChild(p);
+            }
+          }
+          makeParticles('pt1', '#3b82d4');
+          makeParticles('pt2', '#8b5cf6');
+          makeParticles('pt3', '#e74c3c');
+        })();
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(o =>
+          o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); })
+        );
+      </script>
+</body>
+
+</html>
